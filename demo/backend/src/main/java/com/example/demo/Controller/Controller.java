@@ -5,18 +5,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class Controller {
 
-//    @GetMapping("/api/test")
-//    public String getString()
-//    {
-//        return "Heeeeeeeeeee";
-//    }
-
-    @GetMapping("/api/test/{someNumber}")
-    public String getString(@PathVariable String someNumber)
+    @GetMapping("/api/test")
+    public String getString()
     {
-        return "Heeeeeeeeeee: " + someNumber;
+        return "Heeeeeeeeeee";
+    }
+    @CrossOrigin(origins = "http://localhost:5174")
+    @GetMapping("/api/getFullInfo/{name}")
+    public String getString(@PathVariable String name)
+    {
+        switch (name)
+        {
+            case "Marie":
+            case "marie":
+                return "Hey Marie Mensing";
+            case "Evgeny":
+            case "evgeny":
+                return "Hey dude";
+            default:
+                return "Sorry i don't know you: " + name;
+        }
     }
 
+    @CrossOrigin(origins = "http://localhost:5174")
     @PostMapping("/api/setProfile")
     public String reveiveData(@RequestBody Profile profile)
     {
