@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 
 const fullInfo = ref('')
 const userName = ref('')
+const password = ref('')
 
 // onMounted(async () => {
 //   const res = await fetch('http://localhost:9090/api/test/69')
@@ -13,7 +14,9 @@ async function getFullInfo() {
 
   if (userName.value === '')
     return fullInfo.value = "Common provide your name";
-  const res = await fetch('http://localhost:9090/api/getFullInfo/' + userName.value)
+  if (password.value === '')
+    return fullInfo.value = "Common provide your password";
+  const res = await fetch('http://localhost:9090/api/getFullInfo/' + userName.value + '/' + password.value)
   fullInfo.value = await res.text()
 
   // const res = await fetch('http://localhost:9090/api/setProfile', {
@@ -29,7 +32,8 @@ async function getFullInfo() {
 <template>
   <div>
     <h1>{{ fullInfo }}</h1>
-    <input v-model="userName" placeholder="Dein Name" />
+    <input v-model="userName" placeholder="Your Name" /><br>
+    <input v-model="password" placeholder="Your PW" /><br>
     <button @click="getFullInfo">Senden</button>
   </div>
 </template>

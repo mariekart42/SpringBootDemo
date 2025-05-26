@@ -1,19 +1,38 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Service.LoginService;
+import com.example.demo.Service.PasswordManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class Controller {
+
+    private final LoginService loginService;
+
+    @Autowired
+    public Controller(LoginService loginService)
+    {
+        this.loginService = loginService;
+    }
+
+//    public void tryLogin(String pw)
+//    {
+//        System.out.println("Login was " + loginService.login(pw));
+//    }
 
     @GetMapping("/api/test")
     public String getString()
     {
         return "Heeeeeeeeeee";
     }
+
     @CrossOrigin(origins = "http://localhost:5174")
-    @GetMapping("/api/getFullInfo/{name}")
-    public String getString(@PathVariable String name)
+    @GetMapping("/api/getFullInfo/{name}/{password}")
+    public String getString(@PathVariable String name, @PathVariable String password)
     {
+        loginService.login(name);
+
         switch (name)
         {
             case "Marie":
